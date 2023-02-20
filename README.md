@@ -45,7 +45,7 @@ TriggerEvent("tp_inputs:getTextInput", inputData, function(cb)
 end) 
 ```
 
-*This script will be an extra semi-requirement for my free or paid scripts.*
-
 ![image2](https://user-images.githubusercontent.com/84135181/220184654-76c6543e-054a-41ed-9eb0-adb5c3848549.png)
 ![image](https://user-images.githubusercontent.com/84135181/220184657-850ef2ce-2ccf-470b-8302-507aaaf7387c.png)
+
+*This script will be an extra semi-requirement for my free or paid scripts and also can be used for everyone who is interested.*
