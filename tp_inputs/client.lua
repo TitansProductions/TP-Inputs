@@ -64,7 +64,7 @@ RegisterCommand("testtpinput",function()
         buttonparam2 = "DECLINE"
     }
 
-    TriggerEvent("tp_inputs:getInput", inputData, function(cb)
+    TriggerEvent("tp_inputs:getButtonInput", inputData, function(cb)
         print(cb)
     end) 
 end)
