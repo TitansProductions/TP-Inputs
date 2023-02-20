@@ -37,6 +37,12 @@ function GetInput(data, hasTextInput, cb)
     end)
 end 
 
+function ToggleUI(display)
+    SetNuiFocus(display,display)
+
+    SendNUIMessage({ action = 'toggle', toggle = display })
+end
+
 -----------------------------------------------------------
 --[[ NUI Callbacks ]]--
 -----------------------------------------------------------
@@ -73,8 +79,3 @@ RegisterCommand("fixtpinputs",function()
     ToggleUI(false)
 end)
 
-function ToggleUI(display)
-    SetNuiFocus(display,display)
-
-    SendNUIMessage({ action = 'toggle', toggle = display })
-end
