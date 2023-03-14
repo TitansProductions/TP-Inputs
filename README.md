@@ -25,6 +25,26 @@ TriggerEvent("tp_inputs:getButtonInput", inputData, function(cb)
 end) 
 ```
 
+**How to use Buttons Selection with returned values?**
+
+When clicking a button, it will return BUY or SELL values as a String.
+
+```lua
+local inputData = {
+    title = "Your title",
+    desc = "Your description",
+    buttonparam1 = "BUY",
+    buttonparam2 = "SELL"
+}
+                            
+TriggerEvent("tp_inputs:getButtonReturnedValuesInput", inputData, function(cb)
+
+    if cb == "BUY" then
+        -- do action
+    end
+end) 
+```
+
 **How to use Text Inputs?**
 
 When clicking  `ACCEPT`  button, it will return the input text value as a String.
