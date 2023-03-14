@@ -1,16 +1,18 @@
 
 var hasTextInputParameter = false;
 
+var hasReturningClickedValues = false;
+
 function closeInputsDialog() {
   toggleInputsDialog(false);
 
   hasTextInputParameter = false;
-  
+  hasReturningClickedValues = false;
 
   document.getElementById("text_input").style.visibility = "hidden";
   document.getElementById("text_input").value = "";
   
-	$.post('http://tp_inputs/closeui', JSON.stringify({}));
+	$.post('http://tp_inputs/closeNUI', JSON.stringify({}));
 }
 
 function toggleInputsDialog(bool) {
@@ -46,11 +48,14 @@ $(function() {
     } else if (event.data.action == "open") {
       var data = event.data.inputData;
       var hasTextInput = event.data.hasTextInput;
+      var hasReturnedValues = event.data.returnClickedValue;
 
 			document.getElementById("title").innerHTML = data.title;
       document.getElementById("description").innerHTML = data.desc;
        
       hasTextInputParameter = hasTextInput;
+
+      hasReturningClickedValues = hasReturnedValues;
 
       if (hasTextInput) {
 
@@ -75,9 +80,15 @@ $(function() {
 
     var returnedText = "ACCEPT"
 
-    if (hasTextInputParameter) {
-      var input = document.getElementById("text_input").value;
-      returnedText = input
+    if (!hasReturningClickedValues){
+
+      if (hasTextInputParameter) {
+        var input = document.getElementById("text_input").value;
+        returnedText = input
+      }
+
+    }else{
+      returnedText = document.getElementById("firstbutton").innerHTML;
     }
 
     $.post("http://tp_inputs/sendbuttonclickedinput", JSON.stringify({
@@ -89,8 +100,14 @@ $(function() {
   $("#tp_inputs").on("click", "#secondbutton", function(event) {
     playAudio("button_click.wav");
 
+    var returnedText = "DECLINE"
+
+    if (hasReturningClickedValues){
+      returnedText = document.getElementById("secondbutton").innerHTML;
+    }
+
     $.post("http://tp_inputs/sendbuttonclickedinput", JSON.stringify({
-      input: "DECLINE",
+      input: returnedText,
     }));
 
   });
