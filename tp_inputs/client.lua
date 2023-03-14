@@ -4,42 +4,42 @@ local input
 --[[ Events ]]--
 -----------------------------------------------------------
 
+AddEventHandler("tp_inputs:getButtonReturnedValuesInput", function(data, cb)
+    GetInput(data, false, true, cb)
+end)
+
 AddEventHandler("tp_inputs:getButtonInput", function(data, cb)
-    GetInput(data, false, cb)
+    GetInput(data, false, false, cb)
 end)
 
 AddEventHandler("tp_inputs:getTextInput", function(data, cb)
-    GetInput(data, true, cb)
+    GetInput(data, true, false, cb)
 end)
-
 
 -----------------------------------------------------------
 --[[ Functions ]]--
 -----------------------------------------------------------
 
-function GetInput(data, hasTextInput, cb)
+function GetInput(data, hasTextInput, returnClickedValue, cb)
 
-    Citizen.CreateThread(function()
+    ToggleUI(true)
 
-        ToggleUI(true)
+    SendNUIMessage({ action = "open", inputData = data, hasTextInput =  hasTextInput, returnClickedValue = returnClickedValue})
 
-        SendNUIMessage({ action = "open", inputData = data, hasTextInput =  hasTextInput})
+    while not input do 
+        Citizen.Wait(0) 
+    end
 
-        while not input do Citizen.Wait(50) end
+    cb(input)
 
-        cb(input)
+    Citizen.Wait(10)
 
-        Citizen.Wait(10)
-
-        input = nil
-        ToggleUI(false)
-
-    end)
+    input = nil
+    SendNUIMessage({ action = 'close'})
 end 
 
 function ToggleUI(display)
     SetNuiFocus(display,display)
-
     SendNUIMessage({ action = 'toggle', toggle = display })
 end
 
@@ -52,30 +52,14 @@ RegisterNUICallback('sendbuttonclickedinput', function(data)
     ToggleUI(false)
 end)
 
-RegisterNUICallback('closeui', function()
+RegisterNUICallback('closeNUI', function()
     ToggleUI(false)
 end)
-
 
 -----------------------------------------------------------
 --[[ Commands ]]--
 -----------------------------------------------------------
 
-RegisterCommand("testtpinput",function()
-
-    local inputData = {
-        title = "Please insert something",
-        desc = "This is a test description",
-        buttonparam1 = "ACCEPT",
-        buttonparam2 = "DECLINE"
-    }
-
-    TriggerEvent("tp_inputs:getButtonInput", inputData, function(cb)
-        print(cb)
-    end) 
-end)
-
-RegisterCommand("fixtpinputs",function()
+RegisterCommand("toggleofftpinputs",function()
     ToggleUI(false)
 end)
-
