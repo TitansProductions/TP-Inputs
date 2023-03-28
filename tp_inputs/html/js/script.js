@@ -2,16 +2,22 @@
 var hasTextInputParameter = false;
 
 var hasReturningClickedValues = false;
+var hasReturningSelectedOptionValue = false;
 
 function closeInputsDialog() {
   toggleInputsDialog(false);
 
   hasTextInputParameter = false;
   hasReturningClickedValues = false;
+  hasReturningSelectedOptionValue = false;
 
   document.getElementById("text_input").style.visibility = "hidden";
   document.getElementById("text_input").value = "";
   
+  document.getElementById("options_select").style.visibility = "hidden";
+
+  $('#options_select').html('');
+
 	$.post('http://tp_inputs/closeNUI', JSON.stringify({}));
 }
 
@@ -44,22 +50,41 @@ $(function() {
 
       document.getElementById("text_input").style.visibility = "hidden";
       document.getElementById("text_input").value = "";
+
+      document.getElementById("options_select").style.visibility = "hidden";
       
     } else if (event.data.action == "open") {
       var data = event.data.inputData;
-      var hasTextInput = event.data.hasTextInput;
-      var hasReturnedValues = event.data.returnClickedValue;
+      var $hasTextInput = event.data.hasTextInput;
+      var $hasReturnedValues = event.data.returnClickedValue;
+      var $hasReturnedSelectedOptionValues = event.data.returnSelectedOptionValue;
 
 			document.getElementById("title").innerHTML = data.title;
       document.getElementById("description").innerHTML = data.desc;
        
-      hasTextInputParameter = hasTextInput;
+      hasTextInputParameter = $hasTextInput;
+      hasReturningClickedValues = $hasReturnedValues;
+      hasReturningSelectedOptionValue = $hasReturnedSelectedOptionValues;
 
-      hasReturningClickedValues = hasReturnedValues;
-
-      if (hasTextInput) {
+      if ($hasTextInput) {
 
         document.getElementById("text_input").style.visibility = "visible";
+      }
+
+      if ($hasReturnedSelectedOptionValues){
+        document.getElementById("options_select").style.visibility = "visible";
+
+        var options = data.options
+
+        var x = document.getElementById("options_select");
+
+        options.forEach((val) => {
+          var option = document.createElement("option");
+          option.text = val;
+          x.add(option);
+
+        });
+
       }
 
       document.getElementById("firstbutton").innerHTML = data.buttonparam1;
@@ -85,8 +110,12 @@ $(function() {
       if (hasTextInputParameter) {
         var input = document.getElementById("text_input").value;
         returnedText = input
-      }
+      }else if (hasReturningSelectedOptionValue){
 
+        var input = document.getElementById("options_select").value;
+
+        returnedText = input
+      }
     }else{
       returnedText = document.getElementById("firstbutton").innerHTML;
     }
