@@ -69,7 +69,7 @@ How to use Multiple Option Inputs?
 
 When clicking ACCEPT button, it will return the selected option text value as a String.
 
-```
+```lua
 local inputData = {
     title = "License Registration",
 	desc  = "What license registration type would you like to create?",
