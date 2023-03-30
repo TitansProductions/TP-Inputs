@@ -65,6 +65,28 @@ TriggerEvent("tp_inputs:getTextInput", inputData, function(cb)
 end) 
 ```
 
+How to use Multiple Option Inputs?
+
+When clicking ACCEPT button, it will return the selected option text value as a String.
+
+```
+local inputData = {
+    title = "License Registration",
+	desc  = "What license registration type would you like to create?",
+	buttonparam1 = "ACCEPT",
+	buttonparam2 = "DECLINE",
+
+	options = {} -- <- The list with the name values.
+}
+	
+TriggerEvent("tp_inputs:getSelectedOptionsInput", inputData, function(cb)
+	if cb == "something" then
+          -- do action
+	end
+			
+end)
+```
+
 ![image2](https://user-images.githubusercontent.com/84135181/220184654-76c6543e-054a-41ed-9eb0-adb5c3848549.png)
 ![image](https://user-images.githubusercontent.com/84135181/220184657-850ef2ce-2ccf-470b-8302-507aaaf7387c.png)
 ![4daf666e9268476a200f16ed43854f5e02e99dff](https://user-images.githubusercontent.com/84135181/228959243-0ac69849-925a-4002-9a98-070d11865c42.jpeg)
