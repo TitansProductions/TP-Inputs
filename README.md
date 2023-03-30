@@ -1,6 +1,6 @@
 # TP-Inputs
 
-TP-Inputs allows you to create a `Text Field` input or `Buttons Selection Inputs` with which both return the selected / typed value. 
+TP-Inputs allows you to create a `Text Field`  input, `Multiple Options` Input and `Buttons Selection` Inputs which both return the selected / typed value.
 
 *Fully responsive to all screen resolutions.*
 
