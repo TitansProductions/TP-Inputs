@@ -1,7 +1,5 @@
 # TP Inputs
 
-# TP Notify
-
 # Installation
 
 1. When opening the zip file, open `tp_inputs-main` directory folder and inside there will be another directory folder which is called as `tp_inputs`, this directory folder is the one that should be exported to your resources (The folder which contains `fxmanifest.lua`).
