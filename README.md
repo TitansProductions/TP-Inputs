@@ -1,4 +1,14 @@
-# TP-Inputs
+# TP Inputs
+
+# TP Notify
+
+# Installation
+
+1. When opening the zip file, open `tp_inputs-main` directory folder and inside there will be another directory folder which is called as `tp_inputs`, this directory folder is the one that should be exported to your resources (The folder which contains `fxmanifest.lua`).
+
+2. Add `ensure tp_inputs` before all the Titans Productions Resources (Scripts) and after TP Versions in the resources.cfg or server.cfg, depends where your scripts are located.
+
+# Developers 
 
 TP-Inputs allows you to create a `Text Field`  input, `Multiple Options` Input and `Buttons Selection` Inputs which both return the selected / typed value.
 
