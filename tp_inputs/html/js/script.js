@@ -1,82 +1,38 @@
-
-var hasTextInputParameter = false;
-
-var hasReturningClickedValues = false;
-var hasReturningSelectedOptionValue = false;
-
-function closeInputsDialog() {
-  toggleInputsDialog(false);
-
-  hasTextInputParameter = false;
-  hasReturningClickedValues = false;
-  hasReturningSelectedOptionValue = false;
-
-  document.getElementById("text_input").style.visibility = "hidden";
-  document.getElementById("text_input").value = "";
-  
-  document.getElementById("options_select").style.visibility = "hidden";
-
-  $('#options_select').html('');
-
-	$.post('http://tp_inputs/closeNUI', JSON.stringify({}));
-}
-
-function toggleInputsDialog(bool) {
-
-	if (bool) {
-		$("#tp_inputs").show();
-	} else {
-		$("#tp_inputs").hide();
-	}
-}
-
-
-function playAudio(sound) {
-	var audio = new Audio('./audio/' + sound);
-	audio.volume = Config.DefaultClickSoundVolume;
-	audio.play();
-}
-
 $(function() {
-
-  toggleInputsDialog(false);
 
 	window.addEventListener('message', function(event) {
 		
     var item = event.data;
 
-    if (item.action === 'toggle') {
-			toggleInputsDialog(item.toggle);
+    if (item.action == 'toggle') {
 
-      document.getElementById("text_input").style.visibility = "hidden";
-      document.getElementById("text_input").value = "";
+      document.body.style.display = item.toggle ? "block" : "none";
 
-      document.getElementById("options_select").style.visibility = "hidden";
+      if (item.toggle) {
+        $("#tp_inputs").fadeIn();
+      }
       
     } else if (event.data.action == "open") {
+
       var data = event.data.inputData;
-      var $hasTextInput = event.data.hasTextInput;
-      var $hasReturnedValues = event.data.returnClickedValue;
-      var $hasReturnedSelectedOptionValues = event.data.returnSelectedOptionValue;
 
-			document.getElementById("title").innerHTML = data.title;
-      document.getElementById("description").innerHTML = data.desc;
+			$("#title").text(data.title);
+      $("#description").text(data.desc);
        
-      hasTextInputParameter = $hasTextInput;
-      hasReturningClickedValues = $hasReturnedValues;
-      hasReturningSelectedOptionValue = $hasReturnedSelectedOptionValues;
+      CONTAINS_TEXT_INPUT_PARAMETER    = event.data.hasTextInput;
+      CONTAINS_RETURNED_CLICKED_VALUES = event.data.returnClickedValue;
+      CONTAINS_RETURNED_OPTION_VALUES  = event.data.returnSelectedOptionValue;
 
-      if ($hasTextInput) {
+      if (CONTAINS_TEXT_INPUT_PARAMETER) {
 
-        document.getElementById("text_input").style.visibility = "visible";
+        $("#text_input").fadeIn();
       }
 
-      if ($hasReturnedSelectedOptionValues){
-        document.getElementById("options_select").style.visibility = "visible";
+      if (CONTAINS_RETURNED_OPTION_VALUES){
+        $("#options_select").fadeIn();
 
         var options = data.options
-
-        var x = document.getElementById("options_select");
+        var x       = document.getElementById("options_select");
 
         options.forEach((val) => {
           var option = document.createElement("option");
@@ -87,11 +43,11 @@ $(function() {
 
       }
 
-      document.getElementById("firstbutton").innerHTML = data.buttonparam1;
-      document.getElementById("secondbutton").innerHTML = data.buttonparam2;
+      $("#left-action-button").text(data.buttonparam1);
+      $("#right-action-button").text(data.buttonparam2);
 
     } else if (event.data.action == "close") {
-      closeInputsDialog();
+      CloseDialog();
     }
 
   });
@@ -100,24 +56,22 @@ $(function() {
   General Action
   -----------------------------------------------------------*/
 
-  $("#tp_inputs").on("click", "#firstbutton", function(event) {
+  $("#tp_inputs").on("click", "#left-action-button", function(event) {
     playAudio("button_click.wav");
 
     var returnedText = "ACCEPT"
 
-    if (!hasReturningClickedValues){
+    if (!CONTAINS_RETURNED_CLICKED_VALUES){
 
-      if (hasTextInputParameter) {
-        var input = document.getElementById("text_input").value;
-        returnedText = input
-      }else if (hasReturningSelectedOptionValue){
+      if (CONTAINS_TEXT_INPUT_PARAMETER) {
+        returnedText = $("#text_input").val();
 
-        var input = document.getElementById("options_select").value;
-
-        returnedText = input
+      }else if (CONTAINS_RETURNED_OPTION_VALUES){
+        returnedText = $("#options_select").val();
       }
+
     }else{
-      returnedText = document.getElementById("firstbutton").innerHTML;
+      returnedText = $("#left-action-button").text();
     }
 
     $.post("http://tp_inputs/sendbuttonclickedinput", JSON.stringify({
@@ -126,13 +80,13 @@ $(function() {
 
   });
   
-  $("#tp_inputs").on("click", "#secondbutton", function(event) {
+  $("#tp_inputs").on("click", "#right-action-button", function(event) {
     playAudio("button_click.wav");
 
     var returnedText = "DECLINE"
 
-    if (hasReturningClickedValues){
-      returnedText = document.getElementById("secondbutton").innerHTML;
+    if (CONTAINS_RETURNED_CLICKED_VALUES){
+      returnedText = $("#right-action-button").text();
     }
 
     $.post("http://tp_inputs/sendbuttonclickedinput", JSON.stringify({
