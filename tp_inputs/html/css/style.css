@@ -66,6 +66,8 @@ body {
 	margin-top: 3.0vw;
 
   font-weight: lighter;
+
+  white-space: pre-wrap;
 }
 
 #text_input {
