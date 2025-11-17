@@ -73,7 +73,7 @@ TriggerEvent("tp_inputs:getTextInput", inputData, function(cb)
 end) 
 ```
 
-How to use Multiple Option Inputs?
+**How to use Multiple Option Inputs?**
 
 When clicking ACCEPT button, it will return the selected option text value as a String.
 
@@ -90,6 +90,29 @@ local inputData = {
 TriggerEvent("tp_inputs:getSelectedOptionsInput", inputData, function(cb)
 	if cb == "something" then
           -- do action
+	end
+			
+end)
+```
+
+
+**How to use a slider?**
+
+When clicking ACCEPT button, it will return the selected option text value as a String.
+
+```lua
+local inputData = {
+    title = "Insert Quantity",
+	desc  = "how much quantity would you like to withdraw?",
+	buttonparam1 = "ACCEPT",
+	buttonparam2 = "DECLINE",
+	min          = 1, -- <- minimum quantity
+	max          = 20, -- <- maximum quantity
+}
+	
+TriggerEvent("tp_inputs:getSliderResult", inputData, function(cb)
+	if cb ~= "DECLINE" then
+          -- do action (returns an integer)
 	end
 			
 end)
