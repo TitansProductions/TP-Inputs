@@ -1,6 +1,7 @@
 let CONTAINS_TEXT_INPUT_PARAMETER     = false;
 let CONTAINS_RETURNED_CLICKED_VALUES  = false;
 let CONTAINS_RETURNED_OPTION_VALUES   = false;
+let CONTAINS_RANGE_SELECTOR           = false;
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -11,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   $("#options_select").fadeOut();
   $('#options_select').html('');
+
+  $("#range-selector").fadeOut();
+  $("#range-selector-value").fadeOut();
+
+  $("#range-selector").val(1);
+  $("#range-selector-value").text('1');
 
 }, false);
 
@@ -28,6 +35,12 @@ function CloseDialog() {
   $("#options_select").fadeOut();
   $('#options_select').html('');
 
+  $("#range-selector").fadeOut();
+  $("#range-selector-value").fadeOut();
+  
+  $("#range-selector-value").text('1');
+  $("#range-selector").val(1);
+  
 	$.post('http://tp_inputs/closeNUI', JSON.stringify({}));
 }
 
