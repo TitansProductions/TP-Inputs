@@ -28,7 +28,8 @@ function CloseDialog() {
   CONTAINS_TEXT_INPUT_PARAMETER    = false;
   CONTAINS_RETURNED_CLICKED_VALUES = false;
   CONTAINS_RETURNED_OPTION_VALUES  = false;
-
+  CONTAINS_RANGE_SELECTOR = false;
+	
   $("#text_input").fadeOut();
   $("#text_input").val("");
   
@@ -49,3 +50,4 @@ function playAudio(sound) {
 	audio.volume = Config.DefaultClickSoundVolume;
 	audio.play();
 }
+
