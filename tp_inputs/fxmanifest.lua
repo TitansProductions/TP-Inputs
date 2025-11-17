@@ -6,11 +6,12 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 
 author 'Nosmakos'
 description 'Titans Productions - Input Dialogs'
-version '1.2.2'
+version '1.2.3'
 
 ui_page 'html/index.html'
 
 client_scripts { 'client.lua' }
 
 files { 'html/**/*' }
+
 
